@@ -17,7 +17,8 @@ public class StatusActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_status);
     roundList = findViewById(R.id.round_list);
-    Game game = (Game) getIntent().getSerializableExtra(getString(R.string.game_data_key));
+    Game game = (Game) getIntent().
+        getSerializableExtra(getString(R.string.game_data_key));
     ArrayAdapter<Round> adapter =
         new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, game.getRounds());
     roundList.setAdapter(adapter);
