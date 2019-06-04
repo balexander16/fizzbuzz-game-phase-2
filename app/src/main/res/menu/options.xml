@@ -3,6 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
   <item
     android:id="@+id/play"
     android:title="@string/play"
@@ -16,6 +17,13 @@
     android:visible="false"
     android:enabled="false"
     app:showAsAction="always"/>
+
+  <item
+    android:id="@+id/reset"
+    android:title="Reset"
+    android:icon="@drawable/replay"
+    app:showAsAction="always"/>
+
 
   <item
     android:id="@+id/settings"
