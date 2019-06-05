@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
       gameTimeElapsed = savedInstanceState.getLong(gameTimeElapsedKey, 0);
     }
     if (game == null) {
-      game = new Game(timeLimit, numDigits, gameDuration);
+      initGame();
     }
     // fade = AnimatorInflater.loadAnimator(this, R.animator.indicator_fade);
 
@@ -164,9 +164,7 @@ public class MainActivity extends AppCompatActivity
     switch (item.getItemId()) {
       case R.id.reset:
         // TODO combine invocations of game constructor
-        game = new Game(timeLimit, numDigits, gameDuration);
-        gameTimeElapsed = 0;
-        complete = false;
+        initGame();
         Toast.makeText(this, R.string.reset_message, Toast.LENGTH_LONG).show();
         pauseGame();
         break;
@@ -188,6 +186,12 @@ public class MainActivity extends AppCompatActivity
         break;
     }
     return handled;
+  }
+
+  private void initGame() {
+    game = new Game(timeLimit, numDigits, gameDuration);
+    gameTimeElapsed = 0;
+    complete = false;
   }
 
   private void showStats() {
@@ -230,7 +234,7 @@ public class MainActivity extends AppCompatActivity
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     readSettings();
     pauseGame();
-    game = new Game(timeLimit, numDigits, gameDuration);
+    initGame();
   }
 
   private void readSettings() {
@@ -255,8 +259,7 @@ public class MainActivity extends AppCompatActivity
   private void resumeGame() {
     running = true;
     if (game == null){
-      game = new Game(timeLimit, numDigits, gameDuration);
-      gameTimeElapsed = 0;
+      initGame();
     }
     updateValue();
     startGameTimer();
@@ -364,7 +367,7 @@ public class MainActivity extends AppCompatActivity
       complete = true;
       runOnUiThread(() -> {
         pauseGame();
-        Toast.makeText(MainActivity.this, "Time's up!", Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, (R.string.time_expired_message), Toast.LENGTH_LONG).show();
         showStats();
       });
     }
