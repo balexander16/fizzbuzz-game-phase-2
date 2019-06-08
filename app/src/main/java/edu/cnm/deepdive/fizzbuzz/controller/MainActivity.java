@@ -203,6 +203,46 @@ public class MainActivity extends AppCompatActivity
     updateClock();
   }
 
+  private void showInstructions() {
+    ImageView up = findViewById(R.id.up_arrow);
+    up.setVisibility(View.VISIBLE);
+    ImageView down = findViewById(R.id.down_arrow);
+    down.setVisibility(View.VISIBLE);
+    ImageView left = findViewById(R.id.left_arrow);
+    left.setVisibility(View.VISIBLE);
+    ImageView right = findViewById(R.id.right_arrow);
+    right.setVisibility(View.VISIBLE);
+
+    TextView upText = findViewById(R.id.up_text);
+    upText.setVisibility(View.VISIBLE);
+    TextView downText = findViewById(R.id.down_text);
+    downText.setVisibility(View.VISIBLE);
+    TextView leftText = findViewById(R.id.left_text);
+    leftText.setVisibility(View.VISIBLE);
+    TextView rightText = findViewById(R.id.right_text);
+    rightText.setVisibility(View.VISIBLE);
+  }
+
+  private void hideInstructions() {
+    ImageView up = findViewById(R.id.up_arrow);
+    up.setVisibility(View.INVISIBLE);
+    ImageView down = findViewById(R.id.down_arrow);
+    down.setVisibility(View.INVISIBLE);
+    ImageView left = findViewById(R.id.left_arrow);
+    left.setVisibility(View.INVISIBLE);
+    ImageView right = findViewById(R.id.right_arrow);
+    right.setVisibility(View.INVISIBLE);
+
+    TextView upText = findViewById(R.id.up_text);
+    upText.setVisibility(View.INVISIBLE);
+    TextView downText = findViewById(R.id.down_text);
+    downText.setVisibility(View.INVISIBLE);
+    TextView leftText = findViewById(R.id.left_text);
+    leftText.setVisibility(View.INVISIBLE);
+    TextView rightText = findViewById(R.id.right_text);
+    rightText.setVisibility(View.INVISIBLE);
+  }
+
   private void showStats() {
     Intent intent = new Intent(this, StatusActivity.class);
     intent.putExtra(getString(R.string.game_data_key), game);
@@ -263,6 +303,7 @@ public class MainActivity extends AppCompatActivity
     valueDisplay.setText("");
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
+    showInstructions();
   }
 
   private void resumeGame() {
@@ -275,6 +316,7 @@ public class MainActivity extends AppCompatActivity
     startValueTimer();
     // TODO Update any additional necessary fields.
     invalidateOptionsMenu();
+    hideInstructions();
   }
 
   private void stopValueTimer() {
@@ -326,25 +368,13 @@ public class MainActivity extends AppCompatActivity
 
   private void updateValue() {
     int valueLimit = (int) Math.pow(10, numDigits) - 1;
-    int containerHeight = valueContainer.getHeight();
-    int containerWidth = valueContainer.getWidth();
-    int textHeight;
-    int textWidth;
     String valueString;
-
     value = 1 + rng.nextInt(valueLimit);
     valueString = Integer.toString(value);
     valueDisplay.setTranslationX(0);
     valueDisplay.setTranslationY(0);
     valueDisplay.setText(valueString);
-    // HACK This assumes text is centered in layout.
     valueDisplay.getPaint().getTextBounds(valueString, 0, valueString.length(), displayRect);
-    textHeight = displayRect.height();
-    textWidth = displayRect.width();
-    displayRect.top = (containerHeight - textHeight) / 2;
-    displayRect.bottom = (containerHeight + textHeight) / 2;
-    displayRect.left = (containerWidth - textWidth) / 2;
-    displayRect.right = (containerWidth + textWidth) / 2;
   }
 
   private void startValueTimer() {
@@ -476,6 +506,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onDown(MotionEvent evt) {
       boolean handled = false;
+      int containerHeight = valueContainer.getHeight();
+      int containerWidth = valueContainer.getWidth();
+      int textHeight;
+      int textWidth;
+      textHeight = displayRect.height();
+      textWidth = displayRect.width();
+      // HACK This assumes text is centered in layout.
+      displayRect.top = (containerHeight - textHeight) / 2;
+      displayRect.bottom = (containerHeight + textHeight) / 2;
+      displayRect.left = (containerWidth - textWidth) / 2;
+      displayRect.right = (containerWidth + textWidth) / 2;
+
       if (displayRect.contains(Math.round(evt.getX()), Math.round(evt.getY()))) {
         originX = evt.getX() - valueDisplay.getTranslationX();
         originY = evt.getY() - valueDisplay.getTranslationY();

@@ -21,7 +21,8 @@
       android:parentActivityName=".controller.MainActivity"/>
     <activity
       android:launchMode="singleTop"
-      android:name=".controller.MainActivity">
+      android:name=".controller.MainActivity"
+      android:configChanges="orientation|fontScale">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 

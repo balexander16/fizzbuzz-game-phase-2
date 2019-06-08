@@ -47,5 +47,9 @@
   <string name="time_expired_message">Time\'s up!</string>
 
   <string name="clock_format">%1$d:%2$04.1f</string>
+  <string name="down_text">Down for neither</string>
+  <string name="left_text">Left for Fizz</string>
+  <string name="right_text">Right for Buzz</string>
+  <string name="up_text">Up for FizzBuzz</string>
 
 </resources>
